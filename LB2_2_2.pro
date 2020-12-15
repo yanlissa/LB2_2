@@ -15,9 +15,6 @@ SOURCES += \
 HEADERS += \
     calc.h
 
-TRANSLATIONS += \
-    LB2_2_2_ru_RU.ts
-
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
