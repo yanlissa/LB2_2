@@ -14,7 +14,10 @@
 #define STAGE1 1
 #define STAGE2 2
 
-const QVector<QString> operations = {""};
+#define OPERATION_PLUZ 1
+#define OPERATION_MINUS 2
+#define OPERATION_INCREASE 3
+
 
 class Calc : public QMainWindow
 {
@@ -30,9 +33,10 @@ private:
     QRadioButton *engineeringRadioButton;
 
     QString slot1;
-    QString slot2;
+    double x;
     int operation;
     int stage;
+    bool hasNumber;
     bool hasComma;
 
     void createCommonWidget();
@@ -51,5 +55,10 @@ public slots:
     void zeroClicked();
     void numberClicked();
     void commaClicked();
+    void equalClicked();
+    void binaryClicked();
+    void pluzClicked();
+    void minusClicked();
+    void increaseClicked();
 };
 #endif // CALC_H

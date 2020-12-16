@@ -1,5 +1,28 @@
 ﻿#include "calc.h"
 
+double add(double a, double b)
+{
+    return a + b;
+}
+
+double subtract(double a, double b)
+{
+    return a - b;
+}
+
+double multiply(double a, double b)
+{
+    return a * b;
+}
+
+double (*operations[])(double, double) = {
+        nullptr,
+        add,
+        subtract,
+        multiply
+};
+
+
 Calc::Calc(QWidget *parent)
     : QMainWindow(parent), mainWidget(nullptr), mainLayout(nullptr)
 {
@@ -169,7 +192,10 @@ void Calc::createSimpleWidget()
     connect(Button8, SIGNAL(clicked()), this, SLOT(numberClicked()));
     connect(Button9, SIGNAL(clicked()), this, SLOT(numberClicked()));
     connect(ButtonComma, SIGNAL(clicked()), this, SLOT(commaClicked()));
-
+    connect(ButtonEqual, SIGNAL(clicked()), this, SLOT(equalClicked()));
+    connect(ButtonPluz, SIGNAL(clicked()), this, SLOT(pluzClicked()));
+    connect(ButtonMinus, SIGNAL(clicked()), this, SLOT(minusClicked()));
+    connect(ButtonIncrease, SIGNAL(clicked()), this, SLOT(increaseClicked()));
 }
 
 void Calc::createEngineeringWidget()
@@ -348,25 +374,23 @@ void Calc::switchMode()
 
 void Calc::clear()
 {
-    slot1 = "";
-    slot2 = "";
+    slot1 = "0";
+    x = 0.0;
+    hasNumber = false;
     hasComma = false;
     operation = 0;
+    stage = STAGE1;
     updateDisplay();
 }
 
 void Calc::updateDisplay()
 {
-    QString dispayText = slot1;
-    if (dispayText == "") {
-        dispayText = "0";
-    }
-    display->setText(dispayText);
+    display->setText(slot1);
 }
 
 void Calc::zeroClicked()
 {
-    if (slot1 == "") {
+    if (!hasNumber) {
         return;
     }
     if (slot1.size() > 10) {
@@ -379,6 +403,10 @@ void Calc::zeroClicked()
 
 void Calc::numberClicked()
 {
+    if (!hasNumber) {
+        slot1 = "";
+        hasNumber = true;
+    }
     if (slot1.size() > 10) {
         return;
     }
@@ -394,7 +422,54 @@ void Calc::commaClicked()
     if (slot1.size() > 10) {
         return;
     }
-    slot1 += ",";
+    if (!hasNumber) {
+        hasNumber = true;
+    }
+    slot1 += ".";
     hasComma = true;
     updateDisplay();
+}
+
+void Calc::equalClicked()
+{
+    if (stage != STAGE2) {
+        return;
+    }
+    double y = slot1.toDouble();
+    double res = operations[operation](x, y);
+    slot1 = QString("%1").arg(res, 0, 'g', 6);
+    hasComma = false;
+    hasNumber = false;
+    updateDisplay();
+}
+
+void Calc::binaryClicked()
+{
+    if (stage == STAGE2) {
+        equalClicked();
+    } else {
+        hasComma = false;
+        hasNumber = false;
+        stage = STAGE2;
+    }
+    x = slot1.toDouble();
+    updateDisplay();
+}
+
+void Calc::pluzClicked()
+{
+    binaryClicked();
+    operation = OPERATION_PLUZ;
+}
+
+void Calc::minusClicked()
+{
+    binaryClicked();
+    operation = OPERATION_MINUS;
+}
+
+void Calc::increaseClicked()
+{
+    binaryClicked();
+    operation = OPERATION_INCREASE;
 }
