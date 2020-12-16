@@ -4,8 +4,10 @@
 #include <QGridLayout>
 #include <QLineEdit>
 #include <QMainWindow>
+#include <QPushButton>
 #include <QString>
 #include <QWidget>
+
 
 #define SIMPLE_MODE 1
 #define ENGINEERING_MODE 2
@@ -18,8 +20,10 @@ class Calc : public QMainWindow
     Q_OBJECT
 private:
     QWidget *mainWidget;
-    //QGridLayout *mainLayout;
+    QGridLayout *mainLayout;
     QWidget *common;
+    QWidget *simple;
+    QWidget *engineering;
     QLineEdit *display;
 
     QString slot1;
@@ -28,8 +32,12 @@ private:
     int stage;
     int mode;
 
-    void showSimple();
     void createCommonWidget();
+    void createSimpleWidget();
+    void createEngineeringWidget();
+
+    void showSimple();
+    void showEngineering();
 public:
     Calc(QWidget *parent = nullptr);
     ~Calc();
