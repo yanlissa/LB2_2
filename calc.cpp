@@ -38,13 +38,19 @@ double stepY(double a, double b)
     return pow(a, b);
 }
 
+double y_root(double a, double b)
+{
+    return pow(a, 1/b);
+}
+
 double (*operations[])(double, double) = {
         nullptr,
         add,
         subtract,
         multiply,
         obelus,
-        stepY
+        stepY,
+        y_root
 };
 
 
@@ -350,6 +356,7 @@ void Calc::createEngineeringWidget()
 
     // Connect
     connect(ButtonStepY, SIGNAL(clicked()), this, SLOT(stepYClicked()));
+    connect(ButtonYrt, SIGNAL(clicked()), this, SLOT(yrtClicked()));
 }
 
 void Calc::showSimple ()
@@ -521,4 +528,10 @@ void Calc::stepYClicked()
 {
     binaryClicked();
     operation = OPERATION_STEP_Y;
+}
+
+void Calc::yrtClicked()
+{
+    binaryClicked();
+    operation = OPERATION_Y_ROOT;
 }

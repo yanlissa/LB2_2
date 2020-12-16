@@ -19,6 +19,7 @@
 #define OPERATION_INCREASE 3
 #define OPERATION_OBELUS 4
 #define OPERATION_STEP_Y 5
+#define OPERATION_Y_ROOT 6
 
 
 class Calc : public QMainWindow
@@ -65,5 +66,6 @@ public slots:
     void increaseClicked();
     void obelusClicked();
     void stepYClicked();
+    void yrtClicked();
 };
 #endif // CALC_H
