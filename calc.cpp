@@ -158,7 +158,17 @@ void Calc::createSimpleWidget()
 
     // Connect
     connect(ButtonClear, SIGNAL(clicked()), this, SLOT(clear()));
-    connect(Button0, SIGNAL(clicked()), this, SLOT(numberClicked()));
+    connect(Button0, SIGNAL(clicked()), this, SLOT(zeroClicked()));
+    connect(Button1, SIGNAL(clicked()), this, SLOT(numberClicked()));
+    connect(Button2, SIGNAL(clicked()), this, SLOT(numberClicked()));
+    connect(Button3, SIGNAL(clicked()), this, SLOT(numberClicked()));
+    connect(Button4, SIGNAL(clicked()), this, SLOT(numberClicked()));
+    connect(Button5, SIGNAL(clicked()), this, SLOT(numberClicked()));
+    connect(Button6, SIGNAL(clicked()), this, SLOT(numberClicked()));
+    connect(Button7, SIGNAL(clicked()), this, SLOT(numberClicked()));
+    connect(Button8, SIGNAL(clicked()), this, SLOT(numberClicked()));
+    connect(Button9, SIGNAL(clicked()), this, SLOT(numberClicked()));
+
 }
 
 void Calc::createEngineeringWidget()
@@ -345,7 +355,21 @@ void Calc::clear()
 
 void Calc::updateDisplay()
 {
-    display->setText(slot2 + operations[operation] + slot1);
+    QString dispayText = slot2 + operations[operation] + slot1;
+    if (dispayText == "") {
+        dispayText = "0";
+    }
+    display->setText(dispayText);
+}
+
+void Calc::zeroClicked()
+{
+    if (slot1 == "") {
+        return;
+    }
+
+    slot1 += "0";
+    updateDisplay();
 }
 
 void Calc::numberClicked()

@@ -47,6 +47,7 @@ public slots:
     void switchMode();
     void updateDisplay();
     void clear();
+    void zeroClicked();
     void numberClicked();
 };
 #endif // CALC_H
