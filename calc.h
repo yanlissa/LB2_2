@@ -7,11 +7,14 @@
 #include <QPushButton>
 #include <QRadioButton>
 #include <QString>
+#include <QVector>
 #include <QWidget>
 
 
 #define STAGE1 1
 #define STAGE2 2
+
+const QVector<QString> operations = {""};
 
 class Calc : public QMainWindow
 {
@@ -28,7 +31,7 @@ private:
 
     QString slot1;
     QString slot2;
-    QString operation;
+    int operation;
     int stage;
 
     void createCommonWidget();
@@ -41,6 +44,9 @@ public:
     Calc(QWidget *parent = nullptr);
     ~Calc();
 public slots:
-    void SwitchMode();
+    void switchMode();
+    void updateDisplay();
+    void clear();
+    void numberClicked();
 };
 #endif // CALC_H

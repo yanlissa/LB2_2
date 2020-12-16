@@ -5,9 +5,11 @@ Calc::Calc(QWidget *parent)
 {
     mainWidget = new QWidget;
     setCentralWidget(mainWidget);
+
     createCommonWidget();
     createSimpleWidget();
     createEngineeringWidget();
+    clear();
     showSimple();
 }
 
@@ -42,7 +44,7 @@ void Calc::createCommonWidget()
     engineeringRadioButton->setStyleSheet(st);
 
     simpleRadioButton->setChecked(true);
-    connect(simpleRadioButton, SIGNAL(toggled(bool)), SLOT(SwitchMode()));
+    connect(simpleRadioButton, SIGNAL(toggled(bool)), SLOT(switchMode()));
 
     commonLayout->setSpacing(0);
     commonLayout->addWidget(display, 0, 0, 1, 4);
@@ -153,6 +155,10 @@ void Calc::createSimpleWidget()
 
     // Добавляет компановщик в виджет простого калькулятора
     simple->setLayout(simpleLayout);
+
+    // Connect
+    connect(ButtonClear, SIGNAL(clicked()), this, SLOT(clear()));
+    connect(Button0, SIGNAL(clicked()), this, SLOT(numberClicked()));
 }
 
 void Calc::createEngineeringWidget()
@@ -315,7 +321,7 @@ void Calc::showEngineering ()
     mainWidget->layout()->setContentsMargins(0, 0, 0, 0);
 }
 
-void Calc::SwitchMode()
+void Calc::switchMode()
 {
     common->setParent(this);
     simple->setParent(this);
@@ -327,4 +333,23 @@ void Calc::SwitchMode()
     else {
         showSimple();
     }
+}
+
+void Calc::clear()
+{
+    slot1 = "";
+    slot2 = "";
+    operation = 0;
+    updateDisplay();
+}
+
+void Calc::updateDisplay()
+{
+    display->setText(slot2 + operations[operation] + slot1);
+}
+
+void Calc::numberClicked()
+{
+    slot1 += ((QPushButton*)sender())->text();
+    updateDisplay();
 }
