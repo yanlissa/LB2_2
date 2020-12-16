@@ -43,6 +43,11 @@ double y_root(double a, double b)
     return pow(a, 1/b);
 }
 
+double log_y(double a, double b)
+{
+    return log(a)/log(b);
+}
+
 double (*operations[])(double, double) = {
         nullptr,
         add,
@@ -50,7 +55,8 @@ double (*operations[])(double, double) = {
         multiply,
         obelus,
         stepY,
-        y_root
+        y_root,
+        log_y
 };
 
 
@@ -228,6 +234,8 @@ void Calc::createSimpleWidget()
     connect(ButtonMinus, SIGNAL(clicked()), this, SLOT(minusClicked()));
     connect(ButtonIncrease, SIGNAL(clicked()), this, SLOT(increaseClicked()));
     connect(ButtonObelus, SIGNAL(clicked()), this, SLOT(obelusClicked()));
+    connect(ButtonChange, SIGNAL(clicked()), this, SLOT(changeClicked()));
+    connect(ButtonProcent, SIGNAL(clicked()), this, SLOT(procentClicked()));
 }
 
 void Calc::createEngineeringWidget()
@@ -247,7 +255,7 @@ void Calc::createEngineeringWidget()
     QPushButton* ButtonFactorial = new QPushButton("x!");
     QPushButton* ButtonLn = new QPushButton("ln");
     QPushButton* ButtonLog = new QPushButton("log");
-    QPushButton* ButtonLogy = new QPushButton("logᵧx");
+    QPushButton* ButtonLogY = new QPushButton("logᵧx");
     QPushButton* ButtonExpon = new QPushButton("e");
     QPushButton* ButtonPi = new QPushButton("π");
     QPushButton* ButtonSin = new QPushButton("sin");
@@ -274,7 +282,7 @@ void Calc::createEngineeringWidget()
     ButtonFactorial->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     ButtonLn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     ButtonLog->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    ButtonLogy->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonLogY->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     ButtonExpon->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     ButtonPi->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     ButtonSin->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -304,7 +312,7 @@ void Calc::createEngineeringWidget()
     ButtonFactorial->setStyleSheet(St);
     ButtonLn->setStyleSheet(St);
     ButtonLog->setStyleSheet(St);
-    ButtonLogy->setStyleSheet(St);
+    ButtonLogY->setStyleSheet(St);
     ButtonExpon->setStyleSheet(St);
     ButtonPi->setStyleSheet(St);
     ButtonSin->setStyleSheet(St);
@@ -337,7 +345,7 @@ void Calc::createEngineeringWidget()
     engineeringLayout->addWidget(ButtonFactorial, 1, 4, 1, 1);
     engineeringLayout->addWidget(ButtonLn, 2, 0, 1, 1);
     engineeringLayout->addWidget(ButtonLog, 2, 1, 1, 1);
-    engineeringLayout->addWidget(ButtonLogy, 2, 2, 1, 1);
+    engineeringLayout->addWidget(ButtonLogY, 2, 2, 1, 1);
     engineeringLayout->addWidget(ButtonExpon, 2, 3, 1, 1);
     engineeringLayout->addWidget(ButtonPi, 2, 4, 1, 1);
     engineeringLayout->addWidget(ButtonSin, 3, 0, 1, 1);
@@ -357,6 +365,7 @@ void Calc::createEngineeringWidget()
     // Connect
     connect(ButtonStepY, SIGNAL(clicked()), this, SLOT(stepYClicked()));
     connect(ButtonYrt, SIGNAL(clicked()), this, SLOT(yrtClicked()));
+    connect(ButtonLogY, SIGNAL(clicked()), this, SLOT(logYClicked()));
 }
 
 void Calc::showSimple ()
@@ -534,4 +543,28 @@ void Calc::yrtClicked()
 {
     binaryClicked();
     operation = OPERATION_Y_ROOT;
+}
+
+void Calc::logYClicked()
+{
+    binaryClicked();
+    operation = OPERATION_LOG_Y;
+}
+
+void Calc::changeClicked()
+{
+    if (slot1[0] == '-') {
+        slot1.remove(0,1);
+    } else {
+        slot1 = "-" + slot1;
+    }
+    updateDisplay();
+}
+
+void Calc::procentClicked()
+{
+    double y = slot1.toDouble();
+    y /= 100;
+    slot1 = QString::number(y);
+    updateDisplay();
 }

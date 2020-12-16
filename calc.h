@@ -20,7 +20,7 @@
 #define OPERATION_OBELUS 4
 #define OPERATION_STEP_Y 5
 #define OPERATION_Y_ROOT 6
-
+#define OPERATION_LOG_Y 7
 
 class Calc : public QMainWindow
 {
@@ -67,5 +67,8 @@ public slots:
     void obelusClicked();
     void stepYClicked();
     void yrtClicked();
+    void logYClicked();
+    void changeClicked();
+    void procentClicked();
 };
 #endif // CALC_H
