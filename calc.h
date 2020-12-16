@@ -70,5 +70,9 @@ public slots:
     void logYClicked();
     void changeClicked();
     void procentClicked();
+    void step2Clicked();
+    void step3Clicked();
+    void stepEClicked();
+    void step10Clicked();
 };
 #endif // CALC_H

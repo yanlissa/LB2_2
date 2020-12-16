@@ -366,6 +366,10 @@ void Calc::createEngineeringWidget()
     connect(ButtonStepY, SIGNAL(clicked()), this, SLOT(stepYClicked()));
     connect(ButtonYrt, SIGNAL(clicked()), this, SLOT(yrtClicked()));
     connect(ButtonLogY, SIGNAL(clicked()), this, SLOT(logYClicked()));
+    connect(ButtonStep2, SIGNAL(clicked()), this, SLOT(step2Clicked()));
+    connect(ButtonStep3, SIGNAL(clicked()), this, SLOT(step3Clicked()));
+    connect(ButtonStepE, SIGNAL(clicked()), this, SLOT(stepEClicked()));
+    connect(ButtonStep10, SIGNAL(clicked()), this, SLOT(step10Clicked()));
 }
 
 void Calc::showSimple ()
@@ -565,6 +569,38 @@ void Calc::procentClicked()
 {
     double y = slot1.toDouble();
     y /= 100;
+    slot1 = QString::number(y);
+    updateDisplay();
+}
+
+void Calc::step2Clicked()
+{
+    double y = slot1.toDouble();
+    y *= y;
+    slot1 = QString::number(y);
+    updateDisplay();
+}
+
+void Calc::step3Clicked()
+{
+    double y = slot1.toDouble();
+    y *= y*y;
+    slot1 = QString::number(y);
+    updateDisplay();
+}
+
+void Calc::stepEClicked()
+{
+    double y = slot1.toDouble();
+    y = exp(y);
+    slot1 = QString::number(y);
+    updateDisplay();
+}
+
+void Calc::step10Clicked()
+{
+    double y = slot1.toDouble();
+    y = pow(10, y);
     slot1 = QString::number(y);
     updateDisplay();
 }
