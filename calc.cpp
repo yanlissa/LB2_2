@@ -24,15 +24,27 @@ void Calc::createCommonWidget()
     // Настройка дисплея
     display = new QLineEdit(common);
     display->setReadOnly(true);
-    display->setStyleSheet("QLineEdit{ qproperty-alignment: 'AlignVCenter | AlignRight'; border: 1px solid black; background-color: black; color: white; font: 45pt 'Ubuntu';}");
+    display->setStyleSheet("QLineEdit{ qproperty-alignment: 'AlignVCenter | AlignRight'; border: 1px solid black; background-color: black; color: rgb(255, 255, 255); font: 45pt 'Ubuntu';}");
     display->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     display->setPlaceholderText("0");
 
-    // Временно
-    commonLayout->setSpacing(0);
+    // Настройка кнопок выбора
+    simpleRadioButton = new QRadioButton("Простой");
+    engineeringRadioButton = new QRadioButton("Инженерный");
+    simpleRadioButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    engineeringRadioButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
+    QString st = "QRadioButton{ color: white; font: 15pt 'Ubuntu'; border-radius: 30px;} QRadioButton:hover{ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #0F0F0F, stop: 1 #171717);}";
+    simpleRadioButton->setStyleSheet(st);
+    engineeringRadioButton->setStyleSheet(st);
+
+    simpleRadioButton->setChecked(true);
+
+    commonLayout->setSpacing(0);
     commonLayout->addWidget(display, 0, 0, 1, 4);
-    common->layout()->setContentsMargins(0, 0, 0, 0);
+    commonLayout->addWidget(simpleRadioButton, 1, 0, 1, 1);
+    commonLayout->addWidget(engineeringRadioButton, 1, 1, 1, 1);
+    common->layout()->setContentsMargins(0, 0, 0, 10);
 
 }
 
@@ -271,14 +283,14 @@ void Calc::showSimple ()
     mainWidget = new QWidget;
     mainLayout = new QGridLayout;
     mainLayout->setSpacing(0);
-    mainLayout->addWidget(common, 0, 0, 2, 1);
+    mainLayout->addWidget(common, 0, 0, 3, 1);
 
     setWindowTitle("Калькулятор (обычный)");
-    setMinimumSize(380, 450);
-    setMaximumSize(380, 450);
+    setMinimumSize(380, 525);
+    setMaximumSize(380, 525);
     mode = SIMPLE_MODE;
 
-    mainLayout->addWidget(simple, 3, 0, 7, 1);
+    mainLayout->addWidget(simple, 4, 0, 7, 1);
     mainWidget->setLayout(mainLayout);
     mainWidget->setStyleSheet("background-color: black;");
 
@@ -293,15 +305,15 @@ void Calc::showEngineering ()
     mainWidget = new QWidget;
     mainLayout = new QGridLayout;
     mainLayout->setSpacing(0);
-    mainLayout->addWidget(common, 0, 0, 2, 9);
+    mainLayout->addWidget(common, 0, 0, 3, 9);
 
     setWindowTitle("Калькулятор (инженерный)");
-    setMinimumSize(855, 450);
-    setMaximumSize(855, 450);
+    setMinimumSize(855, 525);
+    setMaximumSize(855, 525);
     mode = ENGINEERING_MODE;
 
-    mainLayout->addWidget(engineering, 3, 0, 7, 5);
-    mainLayout->addWidget(simple, 3, 5, 7, 4);
+    mainLayout->addWidget(engineering, 4, 0, 7, 5);
+    mainLayout->addWidget(simple, 4, 5, 7, 4);
     mainWidget->setLayout(mainLayout);
     mainWidget->setStyleSheet("background-color: black;");
 

@@ -5,6 +5,7 @@
 #include <QLineEdit>
 #include <QMainWindow>
 #include <QPushButton>
+#include <QRadioButton>
 #include <QString>
 #include <QWidget>
 
@@ -25,6 +26,8 @@ private:
     QWidget *simple;
     QWidget *engineering;
     QLineEdit *display;
+    QRadioButton *simpleRadioButton;
+    QRadioButton *engineeringRadioButton;
 
     QString slot1;
     QString slot2;
