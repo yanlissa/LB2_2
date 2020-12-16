@@ -1,18 +1,21 @@
 ﻿#include "calc.h"
 
 Calc::Calc(QWidget *parent)
-    : QMainWindow(parent), mainWidget(nullptr)
+    : QMainWindow(parent), mainWidget(nullptr), mainLayout(nullptr)
 {
+    mainWidget = new QWidget;
+    setCentralWidget(mainWidget);
     createCommonWidget();
     createSimpleWidget();
     createEngineeringWidget();
-    //showSimple();
-    showEngineering();
+    showSimple();
 }
 
 Calc::~Calc()
 {
     delete common;
+    delete simple;
+    delete engineering;
 }
 
 void Calc::createCommonWidget()
@@ -39,6 +42,7 @@ void Calc::createCommonWidget()
     engineeringRadioButton->setStyleSheet(st);
 
     simpleRadioButton->setChecked(true);
+    connect(simpleRadioButton, SIGNAL(toggled(bool)), SLOT(SwitchMode()));
 
     commonLayout->setSpacing(0);
     commonLayout->addWidget(display, 0, 0, 1, 4);
@@ -278,45 +282,49 @@ void Calc::createEngineeringWidget()
 
 void Calc::showSimple ()
 {
-    delete mainWidget;
-
-    mainWidget = new QWidget;
     mainLayout = new QGridLayout;
     mainLayout->setSpacing(0);
-    mainLayout->addWidget(common, 0, 0, 3, 1);
 
     setWindowTitle("Калькулятор (обычный)");
     setMinimumSize(380, 525);
     setMaximumSize(380, 525);
-    mode = SIMPLE_MODE;
 
+    mainLayout->addWidget(common, 0, 0, 3, 1);
     mainLayout->addWidget(simple, 4, 0, 7, 1);
     mainWidget->setLayout(mainLayout);
     mainWidget->setStyleSheet("background-color: black;");
 
-    setCentralWidget(mainWidget);
     mainWidget->layout()->setContentsMargins(0, 0, 0, 0);
 }
 
 void Calc::showEngineering ()
 {
-    delete mainWidget;
-
-    mainWidget = new QWidget;
     mainLayout = new QGridLayout;
     mainLayout->setSpacing(0);
-    mainLayout->addWidget(common, 0, 0, 3, 9);
 
     setWindowTitle("Калькулятор (инженерный)");
     setMinimumSize(855, 525);
     setMaximumSize(855, 525);
-    mode = ENGINEERING_MODE;
 
+    mainLayout->addWidget(common, 0, 0, 3, 9);
     mainLayout->addWidget(engineering, 4, 0, 7, 5);
     mainLayout->addWidget(simple, 4, 5, 7, 4);
     mainWidget->setLayout(mainLayout);
     mainWidget->setStyleSheet("background-color: black;");
 
-    setCentralWidget(mainWidget);
     mainWidget->layout()->setContentsMargins(0, 0, 0, 0);
+}
+
+void Calc::SwitchMode()
+{
+    common->setParent(this);
+    simple->setParent(this);
+    engineering->setParent(this);
+    delete mainLayout;
+    if (!simpleRadioButton->isChecked()) {
+        showEngineering();
+    }
+    else {
+        showSimple();
+    }
 }

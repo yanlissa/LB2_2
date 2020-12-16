@@ -10,9 +10,6 @@
 #include <QWidget>
 
 
-#define SIMPLE_MODE 1
-#define ENGINEERING_MODE 2
-
 #define STAGE1 1
 #define STAGE2 2
 
@@ -33,7 +30,6 @@ private:
     QString slot2;
     QString operation;
     int stage;
-    int mode;
 
     void createCommonWidget();
     void createSimpleWidget();
@@ -44,5 +40,7 @@ private:
 public:
     Calc(QWidget *parent = nullptr);
     ~Calc();
+public slots:
+    void SwitchMode();
 };
 #endif // CALC_H
