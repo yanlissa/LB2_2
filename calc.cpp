@@ -460,11 +460,15 @@ void Calc::equalClicked()
             return error();
         }
     }
-    double res = operations[operation](x, y);
-    slot1 = QString("%1").arg(res, 0, 'g', 6);
-    hasComma = false;
-    hasNumber = false;
-    updateDisplay();
+    try {
+        double res = operations[operation](x, y);
+        slot1 = QString("%1").arg(res, 0, 'g', 6);
+        hasComma = false;
+        hasNumber = false;
+        updateDisplay();
+    } catch (...) {
+        error();
+    }
 }
 
 void Calc::binaryClicked()
