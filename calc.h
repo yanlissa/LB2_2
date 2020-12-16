@@ -33,6 +33,7 @@ private:
     QString slot2;
     int operation;
     int stage;
+    bool hasComma;
 
     void createCommonWidget();
     void createSimpleWidget();
@@ -49,5 +50,6 @@ public slots:
     void clear();
     void zeroClicked();
     void numberClicked();
+    void commaClicked();
 };
 #endif // CALC_H

@@ -34,7 +34,7 @@ void Calc::createCommonWidget()
     display->setPlaceholderText("0");
 
     // Настройка кнопок выбора
-    simpleRadioButton = new QRadioButton("Простой");
+    simpleRadioButton = new QRadioButton("Обычный");
     engineeringRadioButton = new QRadioButton("Инженерный");
     simpleRadioButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     engineeringRadioButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -168,6 +168,7 @@ void Calc::createSimpleWidget()
     connect(Button7, SIGNAL(clicked()), this, SLOT(numberClicked()));
     connect(Button8, SIGNAL(clicked()), this, SLOT(numberClicked()));
     connect(Button9, SIGNAL(clicked()), this, SLOT(numberClicked()));
+    connect(ButtonComma, SIGNAL(clicked()), this, SLOT(commaClicked()));
 
 }
 
@@ -349,13 +350,14 @@ void Calc::clear()
 {
     slot1 = "";
     slot2 = "";
+    hasComma = false;
     operation = 0;
     updateDisplay();
 }
 
 void Calc::updateDisplay()
 {
-    QString dispayText = slot2 + operations[operation] + slot1;
+    QString dispayText = slot1;
     if (dispayText == "") {
         dispayText = "0";
     }
@@ -367,6 +369,9 @@ void Calc::zeroClicked()
     if (slot1 == "") {
         return;
     }
+    if (slot1.size() > 10) {
+        return;
+    }
 
     slot1 += "0";
     updateDisplay();
@@ -374,6 +379,22 @@ void Calc::zeroClicked()
 
 void Calc::numberClicked()
 {
+    if (slot1.size() > 10) {
+        return;
+    }
     slot1 += ((QPushButton*)sender())->text();
+    updateDisplay();
+}
+
+void Calc::commaClicked()
+{
+    if (hasComma) {
+        return;
+    }
+    if (slot1.size() > 10) {
+        return;
+    }
+    slot1 += ",";
+    hasComma = true;
     updateDisplay();
 }
