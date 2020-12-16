@@ -381,6 +381,10 @@ void Calc::createEngineeringWidget()
     connect(ButtonSqrt, SIGNAL(clicked()), this, SLOT(sqrtClicked()));
     connect(ButtonCbrt, SIGNAL(clicked()), this, SLOT(cbrtClicked()));
     connect(ButtonFactorial, SIGNAL(clicked()), this, SLOT(factorialClicked()));
+    connect(ButtonLn, SIGNAL(clicked()), this, SLOT(lnClicked()));
+    connect(ButtonLog, SIGNAL(clicked()), this, SLOT(logClicked()));
+    connect(ButtonExpon, SIGNAL(clicked()), this, SLOT(exponClicked()));
+    connect(ButtonPi, SIGNAL(clicked()), this, SLOT(piClicked()));
 
 }
 
@@ -658,12 +662,40 @@ void Calc::cbrtClicked()
 
 void Calc::factorialClicked()
 {
-    unsigned long y = slot1.toULong();
-    if (y < 0 || y > 103) {
+    double y1 = slot1.toDouble();
+    if (y1 < 0 || y1 > 103) {
         error();
         return;
     }
+    unsigned long y = slot1.toULong();
     y = factorial(y);
     slot1 = QString("%1").arg((double) y, 0, 'g', 10);
+    unaryClicked();
+}
+void Calc::lnClicked()
+{
+    double y = slot1.toDouble();
+    y = log(y);
+    slot1 = QString::number(y);
+    unaryClicked();
+}
+
+void Calc::logClicked()
+{
+    double y = slot1.toDouble();
+    y = log10(y);
+    slot1 = QString::number(y);
+    unaryClicked();
+}
+
+void Calc::exponClicked()
+{
+    slot1 = "2.718281828";
+    unaryClicked();
+}
+
+void Calc::piClicked()
+{
+    slot1 = "3.141592654";
     unaryClicked();
 }

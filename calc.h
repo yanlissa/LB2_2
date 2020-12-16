@@ -79,5 +79,9 @@ public slots:
     void sqrtClicked();
     void cbrtClicked();
     void factorialClicked();
+    void lnClicked();
+    void logClicked();
+    void exponClicked();
+    void piClicked();
 };
 #endif // CALC_H
