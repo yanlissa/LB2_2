@@ -1,12 +1,13 @@
-#include "calc.h"
+﻿#include "calc.h"
 
 Calc::Calc(QWidget *parent)
     : QMainWindow(parent), mainWidget(nullptr)
 {
     createCommonWidget();
     createSimpleWidget();
-    //createEngineeringWidget();
-    showSimple();
+    createEngineeringWidget();
+    //showSimple();
+    showEngineering();
 }
 
 Calc::~Calc()
@@ -107,10 +108,10 @@ void Calc::createSimpleWidget()
     ButtonPluz->setStyleSheet(St3);
     ButtonEqual->setStyleSheet(St3);
 
-    // Расстояние между кнопками нет
+    // Расстояние между кнопками 5px
     simpleLayout->setSpacing(5);
 
-    // Устанавливаем компановщик во весь виджет
+    // Устанавливаем компановщик во весь виджет с отступом по 10px справа, слева и снизу
     simpleLayout->setContentsMargins(10, 0, 10, 10);
 
     // Добавляем кнопки в компановщик
@@ -143,10 +144,123 @@ void Calc::createEngineeringWidget()
     engineering = new QWidget;
     QGridLayout *engineeringLayout = new QGridLayout(engineering);
 
-    QPushButton* Button;
+    QPushButton* ButtonStep2 = new QPushButton("x²");
+    QPushButton* ButtonStep3 = new QPushButton("x³");
+    QPushButton* ButtonStepY = new QPushButton("xʸ");
+    QPushButton* ButtonStepE = new QPushButton("eˣ");
+    QPushButton* ButtonStep10 = new QPushButton("10ˣ");
+    QPushButton* ButtonInvert = new QPushButton("¹⁄ₓ");
+    QPushButton* ButtonSqrt = new QPushButton("√x");
+    QPushButton* ButtonCbrt = new QPushButton("³√x");
+    QPushButton* ButtonYrt = new QPushButton("ʸ√x");
+    QPushButton* ButtonFactorial = new QPushButton("x!");
+    QPushButton* ButtonLn = new QPushButton("ln");
+    QPushButton* ButtonLog = new QPushButton("log");
+    QPushButton* ButtonLogy = new QPushButton("logᵧx");
+    QPushButton* ButtonExpon = new QPushButton("e");
+    QPushButton* ButtonPi = new QPushButton("π");
+    QPushButton* ButtonSin = new QPushButton("sin");
+    QPushButton* ButtonCos = new QPushButton("cos");
+    QPushButton* ButtonTg = new QPushButton("tg");
+    QPushButton* ButtonCtg = new QPushButton("ctg");
+    QPushButton* ButtonSec = new QPushButton("sec");
+    QPushButton* ButtonSh = new QPushButton("sh");
+    QPushButton* ButtonCh = new QPushButton("ch");
+    QPushButton* ButtonTh = new QPushButton("th");
+    QPushButton* ButtonCth = new QPushButton("cth");
+    QPushButton* ButtonCsc = new QPushButton("csc");
 
-    engineeringLayout->setSpacing(0);
+    // Предпочтительные размеры
+    ButtonStep2->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonStep3->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonStepY->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonStepE->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonStep10->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonInvert->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonSqrt->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonCbrt->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonYrt->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonFactorial->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonLn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonLog->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonLogy->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonExpon->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonPi->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonSin->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonCos->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonTg->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonCtg->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonSec->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonSh->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonCh->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonTh->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonCth->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    ButtonCsc->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
+    // Стиль кнопок
+    QString St = "QPushButton{ background: #262626; color: white; font: 15pt 'Ubuntu'; border-radius: 30px; border: 1px solid black;} QPushButton:pressed{ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #5E5E5E, stop: 1 #696969);}";
+
+    // Присваиваем стиль
+    ButtonStep2->setStyleSheet(St);
+    ButtonStep3->setStyleSheet(St);
+    ButtonStepY->setStyleSheet(St);
+    ButtonStepE->setStyleSheet(St);
+    ButtonStep10->setStyleSheet(St);
+    ButtonInvert->setStyleSheet(St);
+    ButtonSqrt->setStyleSheet(St);
+    ButtonCbrt->setStyleSheet(St);
+    ButtonYrt->setStyleSheet(St);
+    ButtonFactorial->setStyleSheet(St);
+    ButtonLn->setStyleSheet(St);
+    ButtonLog->setStyleSheet(St);
+    ButtonLogy->setStyleSheet(St);
+    ButtonExpon->setStyleSheet(St);
+    ButtonPi->setStyleSheet(St);
+    ButtonSin->setStyleSheet(St);
+    ButtonCos->setStyleSheet(St);
+    ButtonTg->setStyleSheet(St);
+    ButtonCtg->setStyleSheet(St);
+    ButtonSec->setStyleSheet(St);
+    ButtonSh->setStyleSheet(St);
+    ButtonCh->setStyleSheet(St);
+    ButtonTh->setStyleSheet(St);
+    ButtonCth->setStyleSheet(St);
+    ButtonCsc->setStyleSheet(St);
+
+    // Расстояние между кнопками 5px
+    engineeringLayout->setSpacing(5);
+
+    // Отступ снизу, слева и справа по 10px
+    engineeringLayout->setContentsMargins(10, 0, 10, 10);
+
+    // Добавляем кнопки в компановщик
+    engineeringLayout->addWidget(ButtonStep2, 0, 0, 1, 1);
+    engineeringLayout->addWidget(ButtonStep3, 0, 1, 1, 1);
+    engineeringLayout->addWidget(ButtonStepY, 0, 2, 1, 1);
+    engineeringLayout->addWidget(ButtonStepE, 0, 3, 1, 1);
+    engineeringLayout->addWidget(ButtonStep10, 0, 4, 1, 1);
+    engineeringLayout->addWidget(ButtonInvert, 1, 0, 1, 1);
+    engineeringLayout->addWidget(ButtonSqrt, 1, 1, 1, 1);
+    engineeringLayout->addWidget(ButtonCbrt, 1, 2, 1, 1);
+    engineeringLayout->addWidget(ButtonYrt, 1, 3, 1, 1);
+    engineeringLayout->addWidget(ButtonFactorial, 1, 4, 1, 1);
+    engineeringLayout->addWidget(ButtonLn, 2, 0, 1, 1);
+    engineeringLayout->addWidget(ButtonLog, 2, 1, 1, 1);
+    engineeringLayout->addWidget(ButtonLogy, 2, 2, 1, 1);
+    engineeringLayout->addWidget(ButtonExpon, 2, 3, 1, 1);
+    engineeringLayout->addWidget(ButtonPi, 2, 4, 1, 1);
+    engineeringLayout->addWidget(ButtonSin, 3, 0, 1, 1);
+    engineeringLayout->addWidget(ButtonCos, 3, 1, 1, 1);
+    engineeringLayout->addWidget(ButtonTg, 3, 2, 1, 1);
+    engineeringLayout->addWidget(ButtonCtg, 3, 3, 1, 1);
+    engineeringLayout->addWidget(ButtonSec, 3, 4, 1, 1);
+    engineeringLayout->addWidget(ButtonSh, 4, 0, 1, 1);
+    engineeringLayout->addWidget(ButtonCh, 4, 1, 1, 1);
+    engineeringLayout->addWidget(ButtonTh, 4, 2, 1, 1);
+    engineeringLayout->addWidget(ButtonCth, 4, 3, 1, 1);
+    engineeringLayout->addWidget(ButtonCsc, 4, 4, 1, 1);
+
+    // Добавляем конпановщик в виджет
     engineering->setLayout(engineeringLayout);
 }
 
@@ -155,10 +269,9 @@ void Calc::showSimple ()
     delete mainWidget;
 
     mainWidget = new QWidget;
-    QGridLayout *mainLayout = new QGridLayout;
+    mainLayout = new QGridLayout;
     mainLayout->setSpacing(0);
     mainLayout->addWidget(common, 0, 0, 2, 1);
-
 
     setWindowTitle("Калькулятор (обычный)");
     setMinimumSize(380, 450);
@@ -175,5 +288,23 @@ void Calc::showSimple ()
 
 void Calc::showEngineering ()
 {
+    delete mainWidget;
 
+    mainWidget = new QWidget;
+    mainLayout = new QGridLayout;
+    mainLayout->setSpacing(0);
+    mainLayout->addWidget(common, 0, 0, 2, 9);
+
+    setWindowTitle("Калькулятор (инженерный)");
+    setMinimumSize(855, 450);
+    setMaximumSize(855, 450);
+    mode = ENGINEERING_MODE;
+
+    mainLayout->addWidget(engineering, 3, 0, 7, 5);
+    mainLayout->addWidget(simple, 3, 5, 7, 4);
+    mainWidget->setLayout(mainLayout);
+    mainWidget->setStyleSheet("background-color: black;");
+
+    setCentralWidget(mainWidget);
+    mainWidget->layout()->setContentsMargins(0, 0, 0, 0);
 }
