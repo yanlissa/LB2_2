@@ -83,5 +83,15 @@ public slots:
     void logClicked();
     void exponClicked();
     void piClicked();
+    void sinClicked();
+    void cosClicked();
+    void tgClicked();
+    void ctgClicked();
+    void secClicked();
+    void shClicked();
+    void cthClicked();
+    void cscClicked();
+    void chClicked();
+    void thClicked();
 };
 #endif // CALC_H

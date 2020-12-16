@@ -385,6 +385,16 @@ void Calc::createEngineeringWidget()
     connect(ButtonLog, SIGNAL(clicked()), this, SLOT(logClicked()));
     connect(ButtonExpon, SIGNAL(clicked()), this, SLOT(exponClicked()));
     connect(ButtonPi, SIGNAL(clicked()), this, SLOT(piClicked()));
+    connect(ButtonSin, SIGNAL(clicked()), this, SLOT(sinClicked()));
+    connect(ButtonCos, SIGNAL(clicked()), this, SLOT(cosClicked()));
+    connect(ButtonTg, SIGNAL(clicked()), this, SLOT(tgClicked()));
+    connect(ButtonCtg, SIGNAL(clicked()), this, SLOT(ctgClicked()));
+    connect(ButtonSec, SIGNAL(clicked()), this, SLOT(secClicked()));
+    connect(ButtonSh, SIGNAL(clicked()), this, SLOT(shClicked()));
+    connect(ButtonCh, SIGNAL(clicked()), this, SLOT(chClicked()));
+    connect(ButtonTh, SIGNAL(clicked()), this, SLOT(thClicked()));
+    connect(ButtonCth, SIGNAL(clicked()), this, SLOT(cthClicked()));
+    connect(ButtonCsc, SIGNAL(clicked()), this, SLOT(cscClicked()));
 
 }
 
@@ -697,5 +707,105 @@ void Calc::exponClicked()
 void Calc::piClicked()
 {
     slot1 = "3.141592654";
+    unaryClicked();
+}
+
+void Calc::sinClicked()
+{
+    double y = slot1.toDouble();
+    y = sin(y);
+    slot1 = QString::number(y);
+    unaryClicked();
+}
+
+void Calc::cosClicked()
+{
+    double y = slot1.toDouble();
+    y = cos(y);
+    slot1 = QString::number(y);
+    unaryClicked();
+}
+
+void Calc::tgClicked()
+{
+    double y = slot1.toDouble();
+    if (cos(y) == 0) {
+        error();
+        return;
+    }
+    y = sin(y)/cos(y);
+    slot1 = QString::number(y);
+    unaryClicked();
+}
+
+void Calc::ctgClicked()
+{
+    double y = slot1.toDouble();
+    if (sin(y) == 0) {
+        error();
+        return;
+    }
+    y = cos(y)/sin(y);
+    slot1 = QString::number(y);
+    unaryClicked();
+}
+
+void Calc::secClicked()
+{
+    double y = slot1.toDouble();
+    if (cos(y) == 0) {
+        error();
+        return;
+    }
+    y = 1/cos(y);
+    slot1 = QString::number(y);
+    unaryClicked();
+}
+
+void Calc::shClicked()
+{
+    double y = slot1.toDouble();
+    y = (exp(y) - exp(-y)) / 2;
+    slot1 = QString::number(y);
+    unaryClicked();
+}
+
+void Calc::chClicked()
+{
+    double y = slot1.toDouble();
+    y = (exp(y) + exp(-y)) / 2;
+    slot1 = QString::number(y);
+    unaryClicked();
+}
+
+void Calc::thClicked()
+{
+    double y = slot1.toDouble();
+    y = (exp(y) - exp(-y))/(exp(y) + exp(-y));
+    slot1 = QString::number(y);
+    unaryClicked();
+}
+
+void Calc::cthClicked()
+{
+    double y = slot1.toDouble();
+    if (y == 0.0) {
+        error();
+        return;
+    }
+    y = (exp(y) + exp(-y))/(exp(y) - exp(-y));
+    slot1 = QString::number(y);
+    unaryClicked();
+}
+
+void Calc::cscClicked()
+{
+    double y = slot1.toDouble();
+    if (y == 0.0) {
+        error();
+        return;
+    }
+    y = 1/sin(y);
+    slot1 = QString::number(y);
     unaryClicked();
 }
