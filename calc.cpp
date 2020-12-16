@@ -1,5 +1,7 @@
 ﻿#include "calc.h"
 
+#include <cmath>
+
 void Calc::error()
 {
     slot1 = "Ошибка";
@@ -31,12 +33,18 @@ double obelus(double a, double b)
     return a / b;
 }
 
+double stepY(double a, double b)
+{
+    return pow(a, b);
+}
+
 double (*operations[])(double, double) = {
         nullptr,
         add,
         subtract,
         multiply,
-        obelus
+        obelus,
+        stepY
 };
 
 
@@ -339,6 +347,9 @@ void Calc::createEngineeringWidget()
 
     // Добавляем конпановщик в виджет
     engineering->setLayout(engineeringLayout);
+
+    // Connect
+    connect(ButtonStepY, SIGNAL(clicked()), this, SLOT(stepYClicked()));
 }
 
 void Calc::showSimple ()
@@ -455,13 +466,11 @@ void Calc::equalClicked()
         return;
     }
     double y = slot1.toDouble();
-    if (operation == OPERATION_OBELUS) {
-        if (y == 0) {
-            return error();
-        }
-    }
     try {
         double res = operations[operation](x, y);
+        if (res != res || res >= std::numeric_limits<double>::max() || res <= -std::numeric_limits<double>::max()) {
+            return error();
+        }
         slot1 = QString("%1").arg(res, 0, 'g', 6);
         hasComma = false;
         hasNumber = false;
@@ -506,4 +515,10 @@ void Calc::obelusClicked()
 {
     binaryClicked();
     operation = OPERATION_OBELUS;
+}
+
+void Calc::stepYClicked()
+{
+    binaryClicked();
+    operation = OPERATION_STEP_Y;
 }

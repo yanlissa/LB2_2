@@ -18,6 +18,7 @@
 #define OPERATION_MINUS 2
 #define OPERATION_INCREASE 3
 #define OPERATION_OBELUS 4
+#define OPERATION_STEP_Y 5
 
 
 class Calc : public QMainWindow
@@ -63,5 +64,6 @@ public slots:
     void minusClicked();
     void increaseClicked();
     void obelusClicked();
+    void stepYClicked();
 };
 #endif // CALC_H
