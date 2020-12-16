@@ -59,6 +59,13 @@ double (*operations[])(double, double) = {
         log_y
 };
 
+unsigned long factorial(unsigned long long i)
+{
+    if (i == 0) {
+        return 1;
+    }
+    return i * factorial(i - 1);
+}
 
 Calc::Calc(QWidget *parent)
     : QMainWindow(parent), mainWidget(nullptr), mainLayout(nullptr)
@@ -370,6 +377,11 @@ void Calc::createEngineeringWidget()
     connect(ButtonStep3, SIGNAL(clicked()), this, SLOT(step3Clicked()));
     connect(ButtonStepE, SIGNAL(clicked()), this, SLOT(stepEClicked()));
     connect(ButtonStep10, SIGNAL(clicked()), this, SLOT(step10Clicked()));
+    connect(ButtonInvert, SIGNAL(clicked()), this, SLOT(invertClicked()));
+    connect(ButtonSqrt, SIGNAL(clicked()), this, SLOT(sqrtClicked()));
+    connect(ButtonCbrt, SIGNAL(clicked()), this, SLOT(cbrtClicked()));
+    connect(ButtonFactorial, SIGNAL(clicked()), this, SLOT(factorialClicked()));
+
 }
 
 void Calc::showSimple ()
@@ -513,6 +525,13 @@ void Calc::binaryClicked()
     updateDisplay();
 }
 
+void Calc::unaryClicked()
+{
+    hasNumber = false;
+    hasComma = false;
+    updateDisplay();
+}
+
 void Calc::pluzClicked()
 {
     binaryClicked();
@@ -562,7 +581,7 @@ void Calc::changeClicked()
     } else {
         slot1 = "-" + slot1;
     }
-    updateDisplay();
+    unaryClicked();
 }
 
 void Calc::procentClicked()
@@ -570,7 +589,7 @@ void Calc::procentClicked()
     double y = slot1.toDouble();
     y /= 100;
     slot1 = QString::number(y);
-    updateDisplay();
+    unaryClicked();
 }
 
 void Calc::step2Clicked()
@@ -578,7 +597,7 @@ void Calc::step2Clicked()
     double y = slot1.toDouble();
     y *= y;
     slot1 = QString::number(y);
-    updateDisplay();
+    unaryClicked();
 }
 
 void Calc::step3Clicked()
@@ -586,7 +605,7 @@ void Calc::step3Clicked()
     double y = slot1.toDouble();
     y *= y*y;
     slot1 = QString::number(y);
-    updateDisplay();
+    unaryClicked();
 }
 
 void Calc::stepEClicked()
@@ -594,7 +613,7 @@ void Calc::stepEClicked()
     double y = slot1.toDouble();
     y = exp(y);
     slot1 = QString::number(y);
-    updateDisplay();
+    unaryClicked();
 }
 
 void Calc::step10Clicked()
@@ -602,5 +621,49 @@ void Calc::step10Clicked()
     double y = slot1.toDouble();
     y = pow(10, y);
     slot1 = QString::number(y);
-    updateDisplay();
+    unaryClicked();
+}
+
+void Calc::invertClicked()
+{
+    double y = slot1.toDouble();
+    if (y == 0) {
+        error();
+        return;
+    }
+    y = 1/y;
+    slot1 = QString::number(y);
+    unaryClicked();
+}
+
+void Calc::sqrtClicked()
+{
+    double y = slot1.toDouble();
+    if (y < 0) {
+        error();
+        return;
+    }
+    y = sqrt(y);
+    slot1 = QString::number(y);
+    unaryClicked();
+}
+
+void Calc::cbrtClicked()
+{
+    double y = slot1.toDouble();
+    y = cbrt(y);
+    slot1 = QString::number(y);
+    unaryClicked();
+}
+
+void Calc::factorialClicked()
+{
+    unsigned long y = slot1.toULong();
+    if (y < 0 || y > 103) {
+        error();
+        return;
+    }
+    y = factorial(y);
+    slot1 = QString("%1").arg((double) y, 0, 'g', 10);
+    unaryClicked();
 }

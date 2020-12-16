@@ -61,6 +61,7 @@ public slots:
     void commaClicked();
     void equalClicked();
     void binaryClicked();
+    void unaryClicked();
     void pluzClicked();
     void minusClicked();
     void increaseClicked();
@@ -74,5 +75,9 @@ public slots:
     void step3Clicked();
     void stepEClicked();
     void step10Clicked();
+    void invertClicked();
+    void sqrtClicked();
+    void cbrtClicked();
+    void factorialClicked();
 };
 #endif // CALC_H
