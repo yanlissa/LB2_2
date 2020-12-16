@@ -1,5 +1,16 @@
 ﻿#include "calc.h"
 
+void Calc::error()
+{
+    slot1 = "Ошибка";
+    x = 0.0;
+    hasNumber = false;
+    hasComma = false;
+    operation = 0;
+    stage = STAGE1;
+    updateDisplay();
+}
+
 double add(double a, double b)
 {
     return a + b;
@@ -15,11 +26,17 @@ double multiply(double a, double b)
     return a * b;
 }
 
+double obelus(double a, double b)
+{
+    return a / b;
+}
+
 double (*operations[])(double, double) = {
         nullptr,
         add,
         subtract,
-        multiply
+        multiply,
+        obelus
 };
 
 
@@ -196,6 +213,7 @@ void Calc::createSimpleWidget()
     connect(ButtonPluz, SIGNAL(clicked()), this, SLOT(pluzClicked()));
     connect(ButtonMinus, SIGNAL(clicked()), this, SLOT(minusClicked()));
     connect(ButtonIncrease, SIGNAL(clicked()), this, SLOT(increaseClicked()));
+    connect(ButtonObelus, SIGNAL(clicked()), this, SLOT(obelusClicked()));
 }
 
 void Calc::createEngineeringWidget()
@@ -391,7 +409,8 @@ void Calc::updateDisplay()
 void Calc::zeroClicked()
 {
     if (!hasNumber) {
-        return;
+        slot1 = "0";
+        return updateDisplay();
     }
     if (slot1.size() > 10) {
         return;
@@ -436,6 +455,11 @@ void Calc::equalClicked()
         return;
     }
     double y = slot1.toDouble();
+    if (operation == OPERATION_OBELUS) {
+        if (y == 0) {
+            return error();
+        }
+    }
     double res = operations[operation](x, y);
     slot1 = QString("%1").arg(res, 0, 'g', 6);
     hasComma = false;
@@ -472,4 +496,10 @@ void Calc::increaseClicked()
 {
     binaryClicked();
     operation = OPERATION_INCREASE;
+}
+
+void Calc::obelusClicked()
+{
+    binaryClicked();
+    operation = OPERATION_OBELUS;
 }

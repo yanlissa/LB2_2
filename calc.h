@@ -17,6 +17,7 @@
 #define OPERATION_PLUZ 1
 #define OPERATION_MINUS 2
 #define OPERATION_INCREASE 3
+#define OPERATION_OBELUS 4
 
 
 class Calc : public QMainWindow
@@ -49,6 +50,7 @@ public:
     Calc(QWidget *parent = nullptr);
     ~Calc();
 public slots:
+    void error();
     void switchMode();
     void updateDisplay();
     void clear();
@@ -60,5 +62,6 @@ public slots:
     void pluzClicked();
     void minusClicked();
     void increaseClicked();
+    void obelusClicked();
 };
 #endif // CALC_H
